@@ -3,192 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>For My Love ❤️</title>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ffd6e8,#ffeef5);
-overflow:hidden;
-}
-
-.card{
-background:white;
-padding:40px;
-border-radius:25px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-text-align:center;
-width:90%;
-max-width:450px;
-position:relative;
-}
-
-h1{
-color:#ff2d75;
-margin-bottom:15px;
-}
-
-p{
-font-size:22px;
-margin-bottom:40px;
-}
-
-button{
-padding:15px 40px;
-font-size:22px;
-border:none;
-border-radius:40px;
-cursor:pointer;
-transition:.2s;
-}
-
-#yes{
-background:#ff2d75;
-color:white;
-}
-
-#no{
-background:#ddd;
-position:absolute;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffd6e8,#fff4f8);
+    overflow:hidden;
 }
 
 .hearts{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-pointer-events:none;
-overflow:hidden;
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
 }
 
 .heart{
-position:absolute;
-font-size:22px;
-animation:float 7s linear infinite;
+    position:absolute;
+    animation:float linear forwards;
 }
 
 @keyframes float{
+
 0%{
-transform:translateY(100vh);
-opacity:0;
+    transform:translateY(100vh);
+    opacity:0;
 }
-20%{
-opacity:1;
+
+15%{
+    opacity:1;
 }
+
 100%{
-transform:translateY(-120vh);
-opacity:0;
+    transform:translateY(-120vh);
+    opacity:0;
 }
+
 }
+
+.card{
+
+    width:90%;
+    max-width:450px;
+    min-height:560px;
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:35px;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+h1{
+
+    color:#ff2d75;
+
+    margin-bottom:20px;
+
+}
+
+.question{
+
+    font-size:24px;
+
+    line-height:1.4;
+
+    margin-bottom:40px;
+
+}
+
+button{
+
+    border:none;
+
+    border-radius:40px;
+
+    padding:16px 40px;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+#yes{
+
+    background:#ff2d75;
+
+    color:white;
+
+    z-index:2;
+
+}
+
+#yes:hover{
+
+    transform:scale(1.05);
+
+}
+
+#no{
+
+    position:absolute;
+
+    background:#ececec;
+
+    color:#444;
+
+}
+
+.footer-note{
+
+    margin-top:180px;
+
+    font-size:14px;
+
+    color:#777;
+
+    line-height:1.6;
+
+    font-style:italic;
+
+}
+
 </style>
 
 </head>
+
 <body>
 
 <div class="hearts" id="hearts"></div>
 
-<div class="card">
+<div class="card" id="card">
 
 <h1>❤️ My Dearest Wife Apoorvi ❤️</h1>
 
-<p>
+<p class="question">
+
 You are the love of my life, I want to build a beautiful future with you. Will you go on a date with me?
+
 </p>
 
 <button id="yes">YES 💖</button>
 
 <button id="no">No 🙈</button>
 
+<p class="footer-note">
+
+I already know your answer. I'm just trying to make your day a little brighter.
+I know you've been having a hectic week, and so have I.
+If this little card made you smile, then it has done exactly what I hoped. ❤️
+
+</p>
+
 </div>
+
 <script>
 
-const no=document.getElementById("no");
-const yes=document.getElementById("yes");
+const card = document.getElementById("card");
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
 
-no.style.left="250px";
-no.style.top="220px";
+// Initial position
+positionNoButton();
+
+function positionNoButton(){
+
+    const x = card.clientWidth - no.offsetWidth - 35;
+    const y = 220;
+
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+
+}
 
 function moveButton(){
 
-const w=window.innerWidth-120;
-const h=window.innerHeight-80;
+    const padding = 20;
 
-no.style.left=Math.random()*w+"px";
-no.style.top=Math.random()*h+"px";
+    const maxX = card.clientWidth - no.offsetWidth - padding;
+
+    const maxY = card.clientHeight - no.offsetHeight - padding;
+
+    const minY = 150;
+
+    const x = Math.random() * (maxX - padding) + padding;
+
+    const y = Math.random() * (maxY - minY) + minY;
+
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+
 }
 
-no.addEventListener("mouseover",moveButton);
-no.addEventListener("touchstart",moveButton);
+no.addEventListener("mouseenter", moveButton);
 
-yes.onclick=()=>{
-
-confetti({
-particleCount:250,
-spread:180
+no.addEventListener("touchstart",(e)=>{
+    e.preventDefault();
+    moveButton();
 });
 
-document.body.innerHTML=`
-<div style="display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:linear-gradient(135deg,#ff9ac6,#ffd6e8);
-font-family:Arial;
-text-align:center;
-padding:30px;">
+window.addEventListener("resize",positionNoButton);
 
-<div>
-<h1 style="font-size:55px;color:white;">
-❤️ I Love You Forever ❤️
-</h1>
+yes.addEventListener("click",()=>{
 
-<p style="font-size:28px;color:white;margin-top:20px;">
-Thank you for choosing me every single day.
-<br><br>
-You are my home, my peace,
-my happiness and my forever.
-🥹❤️
-</p>
-</div>
+    confetti({
 
-</div>
-`;
-};
+        particleCount:250,
+
+        spread:180,
+
+        origin:{y:0.6}
+
+    });
+
+    document.body.innerHTML=`
+
+    <div style="
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(135deg,#ffb3cf,#ffe8f2);
+    padding:30px;
+    font-family:Arial;
+    ">
+
+        <div>
+
+        <h1 style="font-size:55px;color:white;margin-bottom:25px;">
+
+        ❤️ I Love You Forever ❤️
+
+        </h1>
+
+        <p style="font-size:28px;color:white;line-height:1.7;">
+
+        Thank you for choosing me every single day.<br><br>
+
+        You are my home,<br>
+
+        my peace,<br>
+
+        my happiness,<br>
+
+        and my forever.
+
+        <br><br>
+
+        I love you more than words can ever express. ❤️
+
+        </p>
+
+        </div>
+
+    </div>
+
+    `;
+
+});
 
 const hearts=document.getElementById("hearts");
 
 setInterval(()=>{
 
-const heart=document.createElement("div");
+    const heart=document.createElement("div");
 
-heart.className="heart";
+    heart.className="heart";
 
-heart.innerHTML="❤️";
+    heart.innerHTML=Math.random()>0.5 ? "❤️" : "💖";
 
-heart.style.left=Math.random()*100+"vw";
+    heart.style.left=Math.random()*100+"vw";
 
-heart.style.animationDuration=(4+Math.random()*5)+"s";
+    heart.style.fontSize=(18+Math.random()*22)+"px";
 
-heart.style.fontSize=(20+Math.random()*25)+"px";
+    heart.style.animationDuration=(4+Math.random()*4)+"s";
 
-hearts.appendChild(heart);
+    hearts.appendChild(heart);
 
-setTimeout(()=>{
-heart.remove();
-},9000);
+    setTimeout(()=>{
+
+        heart.remove();
+
+    },8000);
 
 },350);
 
