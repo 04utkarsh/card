@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Date for Rashi ❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 20px; background: linear-gradient(135deg, #ffe1e9, #fff0e6);
+      font-family: Georgia, serif; color: #682c43;
+    }
+    .card {
+      background: #fffaf8; max-width: 420px; width: 100%; padding: 35px 25px;
+      border-radius: 25px; text-align: center; box-shadow: 0 12px 40px #a54a6b30;
+      border: 1px solid #f8d2df; position: relative; overflow: hidden;
+    }
+    .heart { font-size: 42px; }
+    h1 { font-size: 28px; margin: 12px 0; }
+    .movie { background: #fff0f4; border-radius: 16px; padding: 16px; margin: 22px 0; }
+    .movie h2 { margin: 8px 0; font-size: 25px; color: #a33d62; }
+    .message { line-height: 1.7; font-size: 16px; }
+    .buttons { position: relative; display: flex; gap: 12px; justify-content: center; align-items: center; min-height: 62px; margin-top: 20px; }
+    button { border: 0; padding: 13px 22px; border-radius: 30px; font-size: 16px; cursor: pointer; font-weight: bold; }
+    .yes { background: #d94d7c; color: white; position: relative; z-index: 2; }
+    .no { background: #f5e5eb; color: #8b4260; position: absolute; left: calc(50% + 55px); top: 0; transition: left .16s ease, top .16s ease; }
+    #answer { margin-top: 20px; font-size: 17px; line-height: 1.6; font-weight: bold; }
+    .footer { margin-top: 25px; font-size: 14px; color: #a36a7f; }
+    @media (max-width: 380px) {
+      .card { padding: 28px 18px; }
+      .no { left: calc(50% + 45px); }
+      button { padding: 12px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="card">
+    <div class="heart">❤️</div>
+    <h1>My Dearest Rashi</h1>
+    <p class="message">
+      I know that you are working so hard, and you deserve a movie break.
+      <strong>I know you've been having a hectic week.</strong>
+      <br><br>
+      You've been giving so much of yourself to everything. Now it's time to relax,
+      forget about work for a while, and let me take care of you.
+      <br><br>
+      I love you a lot, my love. Please take care of yourself.
+      Your happiness means the world to me.
+    </p>
+    <div class="movie">
+      <div>🍿 A little date, just for us</div>
+      <h2>Ramayan</h2>
+      <p>📅 7 November</p>
+      <p>🎬 Movie, popcorn & your favourite person (me!)</p>
+    </div>
+    <h3>Will you go on a movie date with me? 🥰</h3>
+    <div class="buttons" id="buttons">
+      <button class="yes" id="yes">YES 💖</button>
+      <button class="no" id="no">No 🙈</button>
+    </div>
+    <div id="answer" aria-live="polite"></div>
+    <div class="footer">A little break, a lot of love. ❤️</div>
+  </main>
+  <script>
+    const card = document.getElementById("card");
+    const buttons = document.getElementById("buttons");
+    const no = document.getElementById("no");
+    const yes = document.getElementById("yes");
+    const answer = document.getElementById("answer");
+
+    function positionNoButton() {
+      const area = buttons.getBoundingClientRect();
+      const button = no.getBoundingClientRect();
+      const maxX = Math.max(0, area.width - button.width);
+      const maxY = Math.max(0, area.height - button.height);
+      no.style.left = Math.random() * maxX + "px";
+      no.style.top = Math.random() * maxY + "px";
+    }
+
+    no.addEventListener("mouseenter", positionNoButton);
+    no.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      positionNoButton();
+    }, { passive: false });
+    no.addEventListener("focus", positionNoButton);
+    window.addEventListener("resize", positionNoButton);
+
+    yes.addEventListener("click", () => {
+      answer.innerHTML = "Yay! It's a date! 🥰<br>I'll take care of the plans. You just bring your beautiful smile. ❤️";
+      no.style.display = "none";
+      yes.textContent = "Can't wait! ❤️";
+    });
+  </script>
+</body>
+</html>
